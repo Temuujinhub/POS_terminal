@@ -1,0 +1,135 @@
+{
+  "expo": {
+    "name": "UBoil POS",
+    "slug": "uboil-pos",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/uboil-logo.png",
+    "scheme": "uboilpos",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "androidStatusBar": {
+      "backgroundColor": "#000000",
+      "barStyle": "light-content"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "mn.uboil.pos"
+    },
+    "android": {
+      "package": "mn.uboil.pos",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      },
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "BLUETOOTH",
+        "BLUETOOTH_CONNECT",
+        "BLUETOOTH_SCAN",
+        "NFC"
+      ],
+      "queries": [
+        {
+          "package": "mn.databank.epos.openapi.app"
+        },
+        {
+          "intent": [
+            {
+              "action": "android.epos.payment.sale"
+            }
+          ]
+        },
+        {
+          "intent": [
+            {
+              "action": "android.epos.payment.healthCheck"
+            }
+          ]
+        },
+        {
+          "intent": [
+            {
+              "action": "android.epos.payment.scanCode"
+            }
+          ]
+        },
+        {
+          "intent": [
+            {
+              "action": "android.epos.tasks.readRfCard"
+            }
+          ]
+        },
+        {
+          "intent": [
+            {
+              "action": "android.epos.tasks.printBitmap"
+            }
+          ]
+        },
+        {
+          "intent": [
+            {
+              "action": "android.epos.payment.settle"
+            }
+          ]
+        },
+        {
+          "intent": [
+            {
+              "action": "android.epos.payment.void"
+            }
+          ]
+        },
+        {
+          "intent": [
+            {
+              "action": "android.epos.payment.checkTrans"
+            }
+          ]
+        },
+        {
+          "intent": [
+            {
+              "action": "android.epos.payment.printTrans"
+            }
+          ]
+        }
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "./plugins/withEposSDK",
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#000000"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": false,
+            "enableShrinkResourcesInReleaseBuilds": false
+          }
+        }
+      ],
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

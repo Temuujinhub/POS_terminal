@@ -1,0 +1,4 @@
+# Render-д ашиглах port
+# Render автоматаар $PORT env өгдөг. uvicorn-руу дамжуулна.
+
+web: uvicorn server:app --host 0.0.0.0 --port $PORT

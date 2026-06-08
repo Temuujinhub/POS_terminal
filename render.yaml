@@ -1,0 +1,22 @@
+services:
+  # FastAPI backend service
+  - type: web
+    name: uboil-pos-backend
+    runtime: python
+    plan: free
+    region: oregon
+    branch: main
+    rootDir: backend
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: MONGO_URL
+        sync: false  # Set this manually in Render dashboard (MongoDB Atlas connection string)
+      - key: DB_NAME
+        value: uboil_pos
+      - key: FLUX_API_BASE_URL
+        value: https://uboil.flux.mn

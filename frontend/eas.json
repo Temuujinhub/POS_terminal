@@ -1,0 +1,66 @@
+{
+  "cli": {
+    "version": ">= 16.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assembleDebug",
+        "buildType": "apk"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview",
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease",
+        "image": "latest"
+      },
+      "env": {
+        "EAS_NO_VCS": "1"
+      }
+    },
+    "preview-small-apk": {
+      "distribution": "internal",
+      "channel": "preview",
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease -PreactNativeArchitectures=arm64-v8a",
+        "image": "latest"
+      },
+      "env": {
+        "EAS_NO_VCS": "1",
+        "EXPO_PUBLIC_BACKEND_URL": "https://uboil-pos-backend.onrender.com"
+      }
+    },
+    "production": {
+      "channel": "production",
+      "android": {
+        "buildType": "app-bundle",
+        "gradleCommand": ":app:bundleRelease",
+        "image": "latest"
+      },
+      "env": {
+        "EXPO_PUBLIC_BACKEND_URL": "https://uboil-pos-backend.onrender.com"
+      }
+    },
+    "production-apk": {
+      "channel": "production",
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease",
+        "image": "latest"
+      },
+      "env": {
+        "EXPO_PUBLIC_BACKEND_URL": "https://uboil-pos-backend.onrender.com"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

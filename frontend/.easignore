@@ -1,0 +1,59 @@
+# .easignore — EAS Build үед upload-аас хасах файлууд.
+# EAS_NO_VCS=1 үед энэ файл нь .gitignore-н оронд ажиллана.
+# Бид modules/epos-sdk фолдер болон JAR-ыг ЗААВАЛ оруулна.
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Expo / Metro cache
+.expo/
+.expo-shared/
+dist/
+web-build/
+expo-env.d.ts
+.metro-cache/
+.metro-health-check*
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Build artifacts
+android/build/
+android/app/build/
+android/.gradle/
+ios/build/
+ios/Pods/
+
+# Logs
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# OS
+.DS_Store
+*.orig.*
+
+# Signing — NEVER upload these
+*.jks
+*.p8
+*.p12
+*.keystore
+
+# Local env files (.env / .env.production ALLOWED)
+.env.local
+.env.*.local
+*.env.local
+
+# Test / dev
+.kotlin/
+__pycache__/
+*.pyc
+
+# NOTE: Custom Kotlin EPOS native module REMOVED (2026-05-29). EPOS SDK
+# integration нь одоо JS-side `expo-intent-launcher`-ээр хийгдэж байна.
+# `modules/` фолдер байхгүй тул ignore хийх шаардлагагүй.
+

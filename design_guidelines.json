@@ -1,0 +1,170 @@
+{
+  "theme": "Light",
+  "archetype": "Swiss & High-Contrast (Industrial/POS)",
+  "language": "Mongolian (MN)",
+  "design_philosophy": "Clean, highly legible, physical/tactile interface. Big touch targets designed for gloved or fast-moving hands. High contrast layout minimizing eye strain under daylight.",
+  "colors": {
+    "background": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "primary": "#0F766E",
+    "primary_description": "Petrol Green - Trustworthy, used for primary actions, active states, and successful flow steps.",
+    "primary_foreground": "#FFFFFF",
+    "secondary": "#F97316",
+    "secondary_description": "Fuel Orange - Warm accent for warnings, partial states, or secondary actions.",
+    "secondary_foreground": "#FFFFFF",
+    "accent_red": "#E11D48",
+    "accent_red_description": "Signal Red - For cancellation, errors, offline pumps.",
+    "text_primary": "#0F172A",
+    "text_secondary": "#475569",
+    "border": "#E2E8F0",
+    "success": "#10B981",
+    "keypad_bg": "#F1F5F9",
+    "keypad_active": "#E2E8F0"
+  },
+  "typography": {
+    "font_family_primary": "Plus Jakarta Sans",
+    "font_family_secondary": "Plus Jakarta Sans",
+    "hierarchy": {
+      "heading_1": "text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900",
+      "heading_2": "text-2xl md:text-3xl font-bold tracking-tight text-slate-900",
+      "heading_3": "text-xl font-bold text-slate-800",
+      "body_large": "text-lg font-medium text-slate-700",
+      "body": "text-base font-medium text-slate-600",
+      "label": "text-sm font-bold uppercase tracking-[0.1em] text-slate-500",
+      "number_display": "text-5xl font-black tracking-tighter text-teal-700",
+      "keypad": "text-3xl font-bold text-slate-800"
+    }
+  },
+  "layout_and_spacing": {
+    "touch_targets": "Minimum 64px height for main buttons and keypad keys. (Critical for POS usability)",
+    "container_padding": "p-4 md:p-6 lg:p-8",
+    "border_radius": "rounded-2xl for main cards, rounded-xl for inner elements and buttons",
+    "shadows": {
+      "card": "shadow-[0_2px_10px_rgba(0,0,0,0.04)]",
+      "floating_action": "shadow-[0_8px_30px_rgba(15,118,110,0.2)]"
+    }
+  },
+  "icons": {
+    "library": "@expo/vector-icons (MaterialCommunityIcons)",
+    "mapping": {
+      "gas_pump": "gas-station",
+      "card": "credit-card-outline",
+      "cash": "cash-multiple",
+      "membership": "card-account-details-star-outline",
+      "receipt": "receipt",
+      "printer": "printer-pos",
+      "bluetooth": "bluetooth",
+      "history": "history",
+      "qr_code": "qrcode"
+    }
+  },
+  "components": {
+    "Keypad": {
+      "layout": "Grid with 3 columns (grid-cols-3), gap-4.",
+      "keys": "Massive 80px tall touch areas. bg-slate-100 active:bg-slate-200. No borders.",
+      "action_keys": "Clear (C) in red tint, Enter (ОК) in Petrol Green."
+    },
+    "PumpTile": {
+      "layout": "Flex column, p-6 bg-white rounded-2xl border-2 transition-all",
+      "states": {
+        "free": "border-slate-200. Status badge: Сул (Green bg, White text)",
+        "in_use": "border-orange-500 shadow-lg. Status badge: Түгээж байна (Orange bg)",
+        "offline": "border-red-200 opacity-70. Status badge: Ажиллахгүй (Red bg)"
+      }
+    },
+    "BottomTab": {
+      "layout": "Flex row, justify-around, fixed bottom, bg-white border-t border-slate-200 pb-safe pt-2",
+      "items": ["Нүүр (Home)", "Тайлан (Report)", "Тохиргоо (Settings)"]
+    },
+    "Header": {
+      "layout": "Flex row, justify-between, items-center, pb-6",
+      "content": "Operator Name, Current Shift Time, Network/Printer Status Indicators"
+    }
+  },
+  "screens": {
+    "1_PIN_Login": {
+      "layout": "Centered flex container, max-w-sm mx-auto",
+      "elements": [
+        "Brand Logo / Title: Түгээгчийн нэвтрэх",
+        "PIN Dots Display: 4-6 large dots, filled/unfilled state",
+        "Keypad Component",
+        "Background image overlaid with white/90 for clean look"
+      ]
+    },
+    "2_Dashboard": {
+      "layout": "Standard layout with Header, Scrollable Grid, BottomTab",
+      "elements": [
+        "Header: Түгээгүүрүүд (Pumps)",
+        "Grid: 4-8 PumpTiles",
+        "Quick Stats row above grid: Өнөөдрийн борлуулалт (Today's Sales)"
+      ]
+    },
+    "3_New_Sale_Flow": {
+      "layout": "Wizard style with large prominent steps. Split screen on tablet (Left: Flow, Right: Summary cart)",
+      "steps": [
+        {"name": "Fuel Type", "UI": "Large buttons for АИ-92, АИ-95, Дизель. Color coded."},
+        {"name": "Amount/Liters", "UI": "Toggle between Дүн (MNT) and Литр (L). Big Number display + Keypad below."},
+        {"name": "Payment Method", "UI": "3 massive cards: Бэлэн (Cash), Карт (Card), Гишүүний карт (Membership)"}
+      ]
+    },
+    "4_Membership_Card": {
+      "layout": "Modal or distinct screen",
+      "elements": [
+        "Input: Enter Card Number (Keypad)",
+        "Result Card: Shows Member Name, Үлдэгдэл (Balance)",
+        "Action: Төлөх (Pay & Deduct) large Petrol Green button"
+      ]
+    },
+    "5_NOAT_Flow": {
+      "layout": "Step-by-step form before final receipt",
+      "elements": [
+        "Type Selector: Хувь хүн (Individual) vs Байгууллага (Organization) toggle",
+        "Input: Регистрийн дугаар (Register number) via keypad (alphanumeric support if needed, but numeric primary for orgs)",
+        "Action: Үргэлжлүүлэх (Continue)"
+      ]
+    },
+    "6_Receipt_Preview": {
+      "layout": "Receipt paper styling (bg-white, shadow-sm, monospace text alignment)",
+      "elements": [
+        "Company Header, Date, Pump Info",
+        "Fuel Type, Liters, Total Amount",
+        "E-Barimt details (Lottery number, Register)",
+        "QR Code (Centered large square)",
+        "Action: Хэвлэх (Print) floating action button"
+      ]
+    },
+    "7_Bluetooth_Printer": {
+      "layout": "List view",
+      "elements": [
+        "Status: Connecting / Connected to [Device Name]",
+        "List of paired devices",
+        "Action: Test Print"
+      ]
+    }
+  },
+  "media": {
+    "backgrounds": [
+      {
+        "url": "https://images.unsplash.com/photo-1763886848346-741be06ab05c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzV8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjBnYXMlMjBzdGF0aW9uJTIwZGF5dGltZXxlbnwwfHx8fDE3Nzc5NDM1OTl8MA&ixlib=rb-4.1.0&q=85",
+        "category": "Login Background",
+        "description": "Bright gas station, use with heavy white overlay (bg-white/90) for Login screen background."
+      }
+    ],
+    "placeholders": [
+      {
+        "url": "https://images.unsplash.com/photo-1646836724029-61037aed37fb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwxfHxnYXMlMjBwdW1wJTIwbm96emxlfGVufDB8fHx8MTc3Nzk0MzU5OXww&ixlib=rb-4.1.0&q=85",
+        "category": "Pump Illustration",
+        "description": "Close up of gas pump nozzle for empty states or header branding."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1579808352667-5db8c02598ce?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODd8MHwxfHNlYXJjaHwxfHxyZWNlaXB0JTIwcGFwZXIlMjBtaW5pbWFsfGVufDB8fHx8MTc3Nzk0MzU5OXww&ixlib=rb-4.1.0&q=85",
+        "category": "Receipt Print Success",
+        "description": "Minimal white paper texture for receipt background or success state."
+      }
+    ]
+  },
+  "accessibility_and_testing": {
+    "contrast": "Ensure white text on Petrol Green (#0F766E) passes WCAG AA.",
+    "data_testid_rules": "CRITICAL: All interactive elements MUST have a data-testid attribute for robust automated testing. Example: data-testid='login-pin-button', data-testid='pump-tile-1', data-testid='pay-cash-button'."
+  }
+}

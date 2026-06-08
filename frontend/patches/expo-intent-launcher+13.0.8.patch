@@ -1,0 +1,23 @@
+diff --git a/node_modules/expo-intent-launcher/android/src/main/java/expo/modules/intentlauncher/IntentLauncherModule.kt b/node_modules/expo-intent-launcher/android/src/main/java/expo/modules/intentlauncher/IntentLauncherModule.kt
+index 56bd930..f2b36d3 100644
+--- a/node_modules/expo-intent-launcher/android/src/main/java/expo/modules/intentlauncher/IntentLauncherModule.kt
++++ b/node_modules/expo-intent-launcher/android/src/main/java/expo/modules/intentlauncher/IntentLauncherModule.kt
+@@ -62,8 +62,16 @@ class IntentLauncherModule : Module() {
+       }
+ 
+       params.extra?.let {
+-        val valuesList = it.mapValues { (_, value) ->
+-          if (value is Double) value.toInt() else value
++        // PATCH: EPOS Open API нь `amount`, `tipAmount`, `traceNo` гэх мэт Long
++        // утгуудыг шаардана (Bundle.getLong-аар уншина). expo-intent-launcher нь
++        // анхдагчаар бүх Double-ийг Int-руу хөрвүүлдэг тул type mismatch үүснэ.
++        // Нэр нь "_long" -ээр төгсөж буй түлхүүрүүдийг Long-аар оруулна.
++        val valuesList = it.mapValues { (key, value) ->
++          if (value is Double) {
++            if (key.endsWith("_long")) value.toLong() else value.toInt()
++          } else value
++        }.mapKeys { (key, _) ->
++          if (key.endsWith("_long")) key.removeSuffix("_long") else key
+         }
+         intent.putExtras(valuesList.toBundle())
+       }
