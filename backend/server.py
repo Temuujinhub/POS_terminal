@@ -398,7 +398,7 @@ async def shift_summary(operator_id: Optional[str] = None):
     txs = await db.transactions.find(q, {"_id": 0}).to_list(1000)
 
     by_fuel = {}
-    by_payment = {"cash": 0, "card": 0, "membership": 0}
+    by_payment: dict = {"cash": 0, "card": 0, "membership": 0}
     total_amount = 0
     total_liters = 0
     for t in txs:
@@ -407,7 +407,8 @@ async def shift_summary(operator_id: Optional[str] = None):
         by_fuel[ft]["liters"] += t["liters"]
         by_fuel[ft]["amount"] += t["amount"]
         by_fuel[ft]["count"] += 1
-        by_payment[t["payment_method"]] += t["amount"]
+        pm = t.get("payment_method") or "other"
+        by_payment[pm] = by_payment.get(pm, 0) + t["amount"]
         total_amount += t["amount"]
         total_liters += t["liters"]
 

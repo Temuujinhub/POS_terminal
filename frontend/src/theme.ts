@@ -29,4 +29,7 @@ export const RADIUS = { sm: 8, md: 12, lg: 16, xl: 20, xxl: 24 };
 export const fmtMNT = (n: number) =>
   `${Math.round(n).toLocaleString("en-US")}₮`;
 
-export const API = process.env.EXPO_PUBLIC_BACKEND_URL + "/api";
+const BACKEND_URL =
+  process.env.EXPO_PUBLIC_BACKEND_URL ||
+  "https://uboil-pos-backend.onrender.com";
+export const API = BACKEND_URL + "/api";
