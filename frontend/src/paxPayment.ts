@@ -30,6 +30,24 @@ import Constants from "expo-constants";
 const EPOS_SDK_VERSION = 24;
 
 /* ============================================================
+ *  Emulator / Simulator detection
+ * ============================================================ */
+function isEmulator(): boolean {
+  // Constants.isDevice is deprecated but often still available in Expo projects
+  // Alternatively check for common emulator patterns
+  const isDevice = (Constants as any).isDevice;
+  if (isDevice !== undefined) return !isDevice;
+
+  // Fallback check
+  return (
+    Platform.OS === 'ios' || // PAX is Android only
+    Platform.constants?.Model?.includes('sdk_gphone') ||
+    Platform.constants?.Model?.includes('Emulator') ||
+    Platform.constants?.Brand?.includes('google') && Platform.constants?.Model?.includes('sdk')
+  );
+}
+
+/* ============================================================
  *  EPOS METHOD constants — Үйлдэл тус бүрийн Intent ACTION
  *  (DATABANK EPOS Open API v26 баримтаас)
  *  
@@ -315,7 +333,9 @@ export async function paxCharge(
   await loadOverrides();
   const cfg = currentCfg();
 
-  if (Platform.OS !== "android" || !cfg.useNative || !isEposNativeAvailable()) {
+  // 🛡️ Emulator protection
+  if (isEmulator() || Platform.OS !== "android" || !cfg.useNative || !isEposNativeAvailable()) {
+    console.log("[PAX] Emulator detected or Native unavailable, using simulation");
     await new Promise((r) => setTimeout(r, 1400));
     return simulatedSale(amountMnt, dbRefNo);
   }
@@ -389,7 +409,8 @@ export async function paxReadCard(): Promise<PaxCardRead> {
   await loadOverrides();
   const cfg = currentCfg();
 
-  if (Platform.OS !== "android" || !cfg.useNative || !isEposNativeAvailable()) {
+  if (isEmulator() || Platform.OS !== "android" || !cfg.useNative || !isEposNativeAvailable()) {
+    console.log("[PAX] Emulator detected, simulating card tap");
     await new Promise((r) => setTimeout(r, 1200));
     const tag =
       "AA" +

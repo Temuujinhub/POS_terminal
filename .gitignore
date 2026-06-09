@@ -87,8 +87,6 @@ credentials.json
 *.keystore
 .kotlin/
 android/app/build/
-android/build/
-android/.gradle/
 ios/build/
 ios/Pods/
 
